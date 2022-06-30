@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class USInteractionComponent;
 
 UCLASS()
 class ROGUELIKETEST_API ASCharacter : public ACharacter
@@ -19,8 +20,15 @@ public:
 	ASCharacter();
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> ProjectileClass;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere)
+	USInteractionComponent* InteractComp{};
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp{};
@@ -29,6 +37,15 @@ protected:
 	UCameraComponent* CameraComp{};
 
 	void MoveForward(float Value);
+	void MoveRight(float Value);
+
+	void PrimaryAttack();
+	void SecondaryAttack();
+
+	void PrimaryInteract();
+
+	FRotator GetShootingDirection();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
